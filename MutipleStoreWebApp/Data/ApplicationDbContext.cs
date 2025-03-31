@@ -6,7 +6,7 @@ using System.Security.Claims;
 
 namespace MutipleStoreWebApp.Data
 {
-    public class ApplicationDbContext : IdentityDbContext
+    public class ApplicationDbContext : IdentityDbContext<AppUser>
     {
         public DbSet<Product> Products { get; set; }
         public DbSet<Category> Categories { get; set; }
@@ -45,6 +45,8 @@ namespace MutipleStoreWebApp.Data
                     Name = Static.Roles.Customer,
                     NormalizedName = Static.Roles.Customer.ToUpper()
                 });
+
+            var hasher = new PasswordHasher<AppUser>();
 
             // global query
             var user = _httpContextAccessor.HttpContext?.User;
