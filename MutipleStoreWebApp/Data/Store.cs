@@ -15,7 +15,7 @@ namespace MutipleStoreWebApp.Data
 
         [Required]
         [StringLength(100)]
-        public string Owner { get; set; }
+        public string OwnerEmail { get; set; }
 
         public ICollection<Product> Products { get; set; } = new List<Product>();
     }
