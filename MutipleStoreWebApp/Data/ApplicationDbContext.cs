@@ -47,6 +47,27 @@ namespace MutipleStoreWebApp.Data
                 });
 
             var hasher = new PasswordHasher<AppUser>();
+            builder.Entity<AppUser>().HasData(new AppUser
+            {
+                Id = "e7f0b276-1e12-4ca5-b85c-ff5615874655",
+                Email = "admin@localhost.com",
+                NormalizedEmail = "ADMIN@LOCALHOST.COM",
+                UserName = "admin@localhost.com",
+                NormalizedUserName = "ADMIN@LOCALHOST.COM",
+                PasswordHash = hasher.HashPassword(null, "Admin@123"),
+                EmailConfirmed = true,
+                FirstName = "admin",
+                LastName = "admin",
+                LastLoggin = DateOnly.MinValue,
+                StoreId = null
+            });
+
+            builder.Entity<IdentityUserRole<string>>().HasData(
+                new IdentityUserRole<string>
+                {
+                    RoleId = "f64f1b15-0d0c-4b20-997c-4649d9d31b64",
+                    UserId = "e7f0b276-1e12-4ca5-b85c-ff5615874655"
+                });
 
             // global query
             var user = _httpContextAccessor.HttpContext?.User;
