@@ -8,6 +8,6 @@ namespace MutipleStoreWebApp.Data
         public string LastName { get; set; }
         public DateOnly LastLoggin { get; set; } = DateOnly.FromDateTime(DateTime.Now);
         public int? StoreId { get; set; }  // Null for Admin
-        public Store Store { get; set; }
+        public Store? Store { get; set; }
     }
 }
