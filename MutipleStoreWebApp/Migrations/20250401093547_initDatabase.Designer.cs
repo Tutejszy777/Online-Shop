@@ -12,8 +12,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace MutipleStoreWebApp.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20250331154944_AddedBasicStoreTablesSeededData")]
-    partial class AddedBasicStoreTablesSeededData
+    [Migration("20250401093547_initDatabase")]
+    partial class initDatabase
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -272,7 +272,7 @@ namespace MutipleStoreWebApp.Migrations
                         {
                             Id = "e7f0b276-1e12-4ca5-b85c-ff5615874655",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "477b0057-495c-4f19-8e1d-fbe686c2aa7d",
+                            ConcurrencyStamp = "0bf3ed34-0a89-4756-8cc5-54671a730f93",
                             Email = "admin@localhost.com",
                             EmailConfirmed = true,
                             FirstName = "admin",
@@ -281,9 +281,9 @@ namespace MutipleStoreWebApp.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "ADMIN@LOCALHOST.COM",
                             NormalizedUserName = "ADMIN@LOCALHOST.COM",
-                            PasswordHash = "AQAAAAIAAYagAAAAENLfrpsim/Nq7Zz3bMlsBEZirkBiGdPTwiwYG81B6LINmE5f6iLj6R2kRqT7QDd1sw==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEBVWw3PQYSz/2RNry/4trCfXjMFtS4m2gQ54n6chrJZhUlPcSgckRpqdOi5Ctb4yQA==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "dc4ad11d-75d0-456b-85a9-77054500394b",
+                            SecurityStamp = "a63aaccc-ed3d-4501-88ac-bf7ddd9e9f2f",
                             TwoFactorEnabled = false,
                             UserName = "admin@localhost.com"
                         });
@@ -306,7 +306,12 @@ namespace MutipleStoreWebApp.Migrations
                         .HasMaxLength(100)
                         .HasColumnType("character varying(100)");
 
+                    b.Property<int>("StoreId")
+                        .HasColumnType("integer");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("StoreId");
 
                     b.ToTable("Categories");
                 });
@@ -447,6 +452,17 @@ namespace MutipleStoreWebApp.Migrations
                     b.HasOne("MutipleStoreWebApp.Data.Store", "Store")
                         .WithMany()
                         .HasForeignKey("StoreId");
+
+                    b.Navigation("Store");
+                });
+
+            modelBuilder.Entity("MutipleStoreWebApp.Data.Category", b =>
+                {
+                    b.HasOne("MutipleStoreWebApp.Data.Store", "Store")
+                        .WithMany()
+                        .HasForeignKey("StoreId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Store");
                 });

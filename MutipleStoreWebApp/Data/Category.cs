@@ -12,6 +12,10 @@ namespace MutipleStoreWebApp.Data
 
         public string Description { get; set; }
 
+        [Required]
+        public int StoreId { get; set; }
+        public Store? Store { get; set; }
+
         public ICollection<Product> Products { get; set; } = new List<Product>();
     }
 }
