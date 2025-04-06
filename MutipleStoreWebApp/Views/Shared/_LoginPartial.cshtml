@@ -13,6 +13,12 @@
             <button  type="submit" class="nav-link btn btn-link text-dark">Logout</button>
         </form>
     </li>
+    @if(User.IsInRole(MutipleStoreWebApp.Static.Roles.Admin) || User.IsInRole(MutipleStoreWebApp.Static.Roles.Owner))
+    {
+        <li class="nav-item">
+            <a class="nav-link text-dark" asp-area="" asp-controller="Dashboard" asp-action="Index">Dashboard</a>
+        </li>
+    }
 }
 else
 {
