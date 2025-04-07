@@ -11,7 +11,7 @@
             <div class="btn-group" role="group" aria-label="Basic example">
                 <a asp-controller="Product" asp-action="Index" type="button" class="btn btn-primary">Product</a>
                 <a asp-controller="Categorie" asp-action="Index" type="button" class="btn btn-primary">Categorie</a>
-                @if (User.IsInRole(MutipleStoreWebApp.Static.Roles.Admin))
+                @if (User.IsInRole(Roles.Admin))
                 {
                     <a asp-controller="Store" asp-action="Index" type="button" class="btn btn-primary">Store</a>
                 }

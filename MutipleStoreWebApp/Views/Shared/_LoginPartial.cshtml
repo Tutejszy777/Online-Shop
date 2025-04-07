@@ -1,11 +1,11 @@
-﻿@using Microsoft.AspNetCore.Identity
+﻿@    using Microsoft.AspNetCore.Identity
 @inject SignInManager<AppUser> SignInManager
 @inject UserManager<AppUser> UserManager
 
 <ul class="navbar-nav">
 @if (SignInManager.IsSignedIn(User))
 {
-    @if (User.IsInRole(MutipleStoreWebApp.Static.Roles.Admin) || User.IsInRole(MutipleStoreWebApp.Static.Roles.Owner))
+    @if (User.IsInRole(Roles.Admin) || User.IsInRole(Roles.Owner))
     {
         <li class="nav-item">
             <a class="nav-link text-dark" asp-area="" asp-controller="Dashboard" asp-action="Index">Dashboard</a>

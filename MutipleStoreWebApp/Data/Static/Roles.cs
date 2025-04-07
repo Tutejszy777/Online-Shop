@@ -1,4 +1,4 @@
-﻿namespace MutipleStoreWebApp.Static
+﻿namespace MutipleStoreWebApp.Data.Static
 {
     public static class Roles
     {
