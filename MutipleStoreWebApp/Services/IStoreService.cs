@@ -4,6 +4,6 @@ namespace MutipleStoreWebApp.Services
 {
     public interface IStoreService
     {
-        Task<Store> GetStoreBySlug(string slug);
+        Task<Store?> GetStoreBySlug(string slug);
     }
 }

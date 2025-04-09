@@ -12,7 +12,7 @@ namespace MutipleStoreWebApp.Services
             _context = context;
         }
 
-        public async Task<Store> GetStoreBySlug(string slug)
+        public async Task<Store?> GetStoreBySlug(string slug)
         {
             if (string.IsNullOrWhiteSpace(slug))
                 throw new Exception();
