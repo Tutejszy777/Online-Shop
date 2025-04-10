@@ -3,7 +3,7 @@ using MutipleStoreWebApp.Data;
 
 namespace MutipleStoreWebApp.Services
 {
-    public class ProductService
+    public class ProductService : IProductService
     {
         private readonly ApplicationDbContext _context;
 
