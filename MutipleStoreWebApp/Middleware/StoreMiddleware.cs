@@ -19,7 +19,7 @@ namespace MutipleStoreWebApp.Middleware
             if (segments.Length > 0)
             {
                 var storeSlug = segments[0];
-                var store = storeService.GetStoreBySlug(storeSlug); // Fetch from DB
+                var store = await storeService.GetStoreBySlug(storeSlug); // Fetch from DB
 
                 if (store != null)
                 {

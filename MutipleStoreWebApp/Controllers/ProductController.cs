@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using MutipleStoreWebApp.Data;
+using MutipleStoreWebApp.Services;
 
 namespace MutipleStoreWebApp.Controllers
 {
@@ -14,17 +15,26 @@ namespace MutipleStoreWebApp.Controllers
     public class ProductController : Controller
     {
         private readonly ApplicationDbContext _context;
+        private readonly IProductService _productService;
 
-        public ProductController(ApplicationDbContext context)
+        public ProductController(ApplicationDbContext context, IProductService productService)
         {
             _context = context;
+            _productService = productService;
         }
 
         // GET: Product
         public async Task<IActionResult> Index()
         {
+            if (HttpContext.Items["ShopId"] is int shopId)
+            {
+                var products = await _productService.GetProductsByStoreId(shopId);
+                return View(products);
+            }
+
             var applicationDbContext = _context.Products.Include(p => p.Category).Include(p => p.Store);
             return View(await applicationDbContext.ToListAsync());
+
         }
 
         // GET: Product/Details/5
