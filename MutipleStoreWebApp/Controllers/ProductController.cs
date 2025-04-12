@@ -28,12 +28,14 @@ namespace MutipleStoreWebApp.Controllers
         {
             if (HttpContext.Items["ShopId"] is int shopId)
             {
-                var products = await _productService.GetProductsByStoreId(shopId);
-                return View(products);
+                return View(await _productService.GetProductsByStoreId(shopId));
             }
 
-            var applicationDbContext = _context.Products.Include(p => p.Category).Include(p => p.Store);
-            return View(await applicationDbContext.ToListAsync());
+            var products = await _context.Products
+                .Include(p => p.Category)
+                .Include(p => p.Store)
+                .ToListAsync();
+            return View(products);
 
         }
 
