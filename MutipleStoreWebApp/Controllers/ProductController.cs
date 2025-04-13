@@ -41,8 +41,7 @@ namespace MutipleStoreWebApp.Controllers
 
             if (!String.IsNullOrEmpty(searchString))
             {
-                products = products.Where(p => p.Name.Contains(searchString)
-                                       || p.Description.Contains(searchString));
+                products = products.Where(p => p.Name.ToUpper().Contains(searchString.ToUpper()));
             }
 
                 return View(products);

@@ -10,6 +10,14 @@
     <a asp-action="Create" class="btn btn-primary">Create New</a>
     <a asp-controller="Dashboard" asp-action="Index" type="button" class="btn btn-primary">Back to Dashboard</a>
 </p>
+
+<form asp-controller="Product" asp-action="Index">
+    <p>
+        <label>Title: <input type="text" name="SearchString" /></label>
+        <input type="submit" value="Filter" />
+    </p>
+</form>
+
 <table class="table">
     <thead>
         <tr>
