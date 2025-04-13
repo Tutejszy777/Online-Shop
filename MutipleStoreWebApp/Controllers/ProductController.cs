@@ -24,18 +24,28 @@ namespace MutipleStoreWebApp.Controllers
         }
 
         // GET: Product
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string searchString)
         {
-            if (HttpContext.Items["ShopId"] is int shopId)
+            //if (HttpContext.Items["ShopId"] is int shopId)
+            //{
+            //    return View(await _productService.GetProductsByStoreId(shopId));
+            //} UNFINISHED
+
+            if(_context.Products == null)
             {
-                return View(await _productService.GetProductsByStoreId(shopId));
+                return Problem("Entity set 'ApplicationDbContext.Products'  is null.");
             }
 
-            var products = await _context.Products
-                .Include(p => p.Category)
-                .Include(p => p.Store)
-                .ToListAsync();
-            return View(products);
+            var products = from p in _context.Products
+                           select p;
+
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                products = products.Where(p => p.Name.Contains(searchString)
+                                       || p.Description.Contains(searchString));
+            }
+
+                return View(products);
 
         }
 

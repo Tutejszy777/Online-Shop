@@ -126,11 +126,11 @@ namespace MutipleStoreWebApp.Data
                     UserId = "7db00e3d-12e3-4f9e-99ff-796223ed024f"
                 });
 
-            // global query
-            var user = _httpContextAccessor.HttpContext?.User;
-            var userEmail = user?.FindFirst(ClaimTypes.Email)?.Value;
+            // global query unfished
+            //var user = _httpContextAccessor.HttpContext?.User;
+            //var userEmail = user?.FindFirst(ClaimTypes.Email)?.Value;
 
-            builder.Entity<Product>().HasQueryFilter(p => userEmail == null || p.Store.OwnerEmail == userEmail);
+            //builder.Entity<Product>().HasQueryFilter(p => userEmail == null || p.Store.OwnerEmail == userEmail);
         }
     }
 }
