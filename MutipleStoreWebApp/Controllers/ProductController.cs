@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using MutipleStoreWebApp.Data;
+using MutipleStoreWebApp.Models;
 using MutipleStoreWebApp.Services;
 
 namespace MutipleStoreWebApp.Controllers
@@ -16,15 +17,17 @@ namespace MutipleStoreWebApp.Controllers
     {
         private readonly ApplicationDbContext _context;
         private readonly IProductService _productService;
+        private readonly IHttpContextAccessor _httpContextAccessor;
 
-        public ProductController(ApplicationDbContext context, IProductService productService)
+        public ProductController(ApplicationDbContext context, IProductService productService, IHttpContextAccessor httpContext)
         {
             _context = context;
             _productService = productService;
+            _httpContextAccessor = httpContext;
         }
 
         // GET: Product
-        public async Task<IActionResult> Index(string searchString)
+        public async Task<IActionResult> Index(int categoryId, string searchString)
         {
             //if (HttpContext.Items["ShopId"] is int shopId)
             //{
@@ -36,6 +39,20 @@ namespace MutipleStoreWebApp.Controllers
                 return Problem("Entity set 'ApplicationDbContext.Products'  is null.");
             }
 
+            var categories = from m in _context.Categories
+                         select m;
+
+            // Get the current user's store ID from the claims
+            var user = _httpContextAccessor.HttpContext?.User;
+            var storeIdClaim = user?.FindFirst("StoreId")?.Value;
+            //if result is false it is admin
+            bool result = int.TryParse(storeIdClaim, out int storeId);
+
+            if (result) 
+            {
+                categories = categories.Where(q => q.StoreId == storeId);
+            }
+
             var products = from p in _context.Products
                            select p;
 
@@ -44,7 +61,28 @@ namespace MutipleStoreWebApp.Controllers
                 products = products.Where(p => p.Name.ToUpper().Contains(searchString.ToUpper()));
             }
 
-                return View(products);
+            if(int.IsPositive(categoryId))
+            {
+                products = products.Where(p => p.CategoryId == categoryId);
+            }
+
+            if(products.Any())
+            {
+                var producteCategoryVM = new ProductCategorieVM
+                {
+                    Categories = new SelectList(await categories.ToListAsync()),
+                    Products = await products.ToListAsync()
+                };
+
+                return View(producteCategoryVM);
+            }
+
+            var emptyVm = new ProductCategorieVM
+            {
+                Categories = new SelectList(await categories.ToListAsync())
+            };
+
+            return View(products);
 
         }
 

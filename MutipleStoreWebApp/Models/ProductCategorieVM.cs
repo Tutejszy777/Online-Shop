@@ -7,7 +7,7 @@ namespace MutipleStoreWebApp.Models
     {
         public List<Product>? Products { get; set; }
         public SelectList Categories { get; set; }
-        public string? Categorie { get; set; }
+        public int? categoryId { get; set; }
         public string? searchString { get; set; }
     }
 }
