@@ -27,7 +27,7 @@ namespace MutipleStoreWebApp.Controllers
         }
 
         // GET: Product
-        public async Task<IActionResult> Index(int categoryId, string searchString)
+        public async Task<IActionResult> Index(string category, string searchString)
         {
             //if (HttpContext.Items["ShopId"] is int shopId)
             //{
@@ -40,18 +40,8 @@ namespace MutipleStoreWebApp.Controllers
             }
 
             var categories = from m in _context.Categories
-                         select m;
-
-            // Get the current user's store ID from the claims
-            var user = _httpContextAccessor.HttpContext?.User;
-            var storeIdClaim = user?.FindFirst("StoreId")?.Value;
-            //if result is false it is admin
-            bool result = int.TryParse(storeIdClaim, out int storeId);
-
-            if (result) 
-            {
-                categories = categories.Where(q => q.StoreId == storeId);
-            }
+                             orderby m.Name
+                             select m.Name;
 
             var products = from p in _context.Products
                            select p;
@@ -61,29 +51,20 @@ namespace MutipleStoreWebApp.Controllers
                 products = products.Where(p => p.Name.ToUpper().Contains(searchString.ToUpper()));
             }
 
-            if(int.IsPositive(categoryId))
+            if(!String.IsNullOrEmpty(category))
             {
+                var categoryId = _context.Categories.FirstOrDefault(c => c.Name == category)?.Id;
                 products = products.Where(p => p.CategoryId == categoryId);
             }
 
-            if(products.Any())
-            {
-                var producteCategoryVM = new ProductCategorieVM
-                {
-                    Categories = new SelectList(await categories.ToListAsync()),
-                    Products = await products.ToListAsync()
-                };
 
-                return View(producteCategoryVM);
-            }
-
-            var emptyVm = new ProductCategorieVM
+            var producteCategoryVM = new ProductCategorieVM
             {
-                Categories = new SelectList(await categories.ToListAsync())
+                Categories = new SelectList(await categories.Distinct().ToListAsync()),
+                Products = await products.ToListAsync()
             };
 
-            return View(products);
-
+            return View(producteCategoryVM);
         }
 
         // GET: Product/Details/5
@@ -98,6 +79,8 @@ namespace MutipleStoreWebApp.Controllers
                 .Include(p => p.Category)
                 .Include(p => p.Store)
                 .FirstOrDefaultAsync(m => m.Id == id);
+
+
             if (product == null)
             {
                 return NotFound();
