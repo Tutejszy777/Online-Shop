@@ -17,7 +17,7 @@ namespace MutipleStoreWebApp.Services
             if (string.IsNullOrWhiteSpace(slug))
                 throw new Exception();
 
-            var store = await _context.Stores.FirstOrDefaultAsync(s => s.Address == slug);
+            var store = await _context.Stores.FirstOrDefaultAsync(s => s.Slug == slug);
 
             return store;
         }
