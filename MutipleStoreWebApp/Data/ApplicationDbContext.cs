@@ -20,7 +20,7 @@ namespace MutipleStoreWebApp.Data
             _httpContextAccessor = httpContextAccessor;
         }
 
-        // (global query filter) to enforce store isolation at the database level.
+        // (global query filter) to enforce store isolation at the database level. UNFINISHED
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
@@ -105,7 +105,7 @@ namespace MutipleStoreWebApp.Data
                 {
                     Id = 1,
                     Name = "DEFAULT",
-                    Address = "DEFAULT",
+                    Slug = "DEFAULT",
                     OwnerEmail = "owner@localhost.com",
                 });
 
