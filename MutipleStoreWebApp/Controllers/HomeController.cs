@@ -1,5 +1,7 @@
 using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using MutipleStoreWebApp.Data;
 using MutipleStoreWebApp.Models;
 
 namespace MutipleStoreWebApp.Controllers
@@ -7,14 +9,32 @@ namespace MutipleStoreWebApp.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
+        private readonly ApplicationDbContext _context;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(ILogger<HomeController> logger, ApplicationDbContext context)
         {
             _logger = logger;
+            _context = context;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index(int? id)
         {
+            //if(id == null)
+            //{
+            //    return NotFound();
+            //}
+
+            //var shop = await _context.Stores
+            //    .Include(s => s.Products)
+            //    .ThenInclude(p => p.Category)
+            //    .AsNoTracking()
+            //    .FirstOrDefaultAsync(s => s.Id == id);
+
+            //if (shop == null)
+            //{
+            //    return NotFound();
+            //}
+
             return View();
         }
 

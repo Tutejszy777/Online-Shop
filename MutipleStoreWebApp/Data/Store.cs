@@ -11,13 +11,15 @@ namespace MutipleStoreWebApp.Data
         public string Name { get; set; }
 
         [StringLength(150)]
-        public string Address { get; set; }
+        public string Slug { get; set; }
 
         [Required]
         [StringLength(100)]
         public string OwnerEmail { get; set; }
 
-        public ICollection<Product> Products { get; set; } = new List<Product>();
+        public ICollection<Product> Products { get; set; }
+
+        public ICollection<Category> Categories { get; set; } 
     }
 }
 
