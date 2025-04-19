@@ -17,25 +17,25 @@ namespace MutipleStoreWebApp.Controllers
             _context = context;
         }
 
-        public async Task<IActionResult> Index(int? id)
+        public async Task<IActionResult> Index(int id = 1)
         {
-            //if(id == null)
-            //{
-            //    return NotFound();
-            //}
+            if (id == null)
+            {
+                return NotFound();
+            }
 
-            //var shop = await _context.Stores
-            //    .Include(s => s.Products)
-            //    .ThenInclude(p => p.Category)
-            //    .AsNoTracking()
-            //    .FirstOrDefaultAsync(s => s.Id == id);
+            var shop = await _context.Stores
+                .Include(s => s.Products)
+                .ThenInclude(p => p.Category)
+                .AsNoTracking()
+                .FirstOrDefaultAsync(k => k.Id == id);
 
-            //if (shop == null)
-            //{
-            //    return NotFound();
-            //}
+            if (shop == null)
+            {
+                return NotFound();
+            }
 
-            return View();
+            return View(shop);
         }
 
         public IActionResult Privacy()
