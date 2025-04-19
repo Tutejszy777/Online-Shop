@@ -55,7 +55,7 @@ namespace MutipleStoreWebApp.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Name,Address,OwnerEmail")] Store store)
+        public async Task<IActionResult> Create([Bind("Id,Name,Slug,OwnerEmail")] Store store)
         {
             if (ModelState.IsValid)
             {
@@ -87,7 +87,7 @@ namespace MutipleStoreWebApp.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Address,OwnerEmail")] Store store)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Slug,OwnerEmail")] Store store)
         {
             if (id != store.Id)
             {
