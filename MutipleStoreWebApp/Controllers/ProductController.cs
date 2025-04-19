@@ -27,7 +27,7 @@ namespace MutipleStoreWebApp.Controllers
         }
 
         // GET: Product
-        public async Task<IActionResult> Index(string category, string searchString)
+        public async Task<IActionResult> Index(string categoryName, string searchString)
         {
             //if (HttpContext.Items["ShopId"] is int shopId)
             //{
@@ -51,9 +51,9 @@ namespace MutipleStoreWebApp.Controllers
                 products = products.Where(p => p.Name.ToUpper().Contains(searchString.ToUpper()));
             }
 
-            if(!String.IsNullOrEmpty(category))
+            if(!String.IsNullOrEmpty(categoryName))
             {
-                var categoryId = _context.Categories.FirstOrDefault(c => c.Name == category)?.Id;
+                var categoryId = _context.Categories.FirstOrDefault(c => c.Name == categoryName)?.Id;
                 products = products.Where(p => p.CategoryId == categoryId);
             }
 
