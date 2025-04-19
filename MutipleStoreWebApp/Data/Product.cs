@@ -15,7 +15,7 @@ namespace MutipleStoreWebApp.Data
         [Column(TypeName = "decimal(18,2)")]
         public decimal Price { get; set; }
 
-        [StringLength(500)]
+        [StringLength(2000)]
         public string Description { get; set; }
 
         [Required]
@@ -32,9 +32,10 @@ namespace MutipleStoreWebApp.Data
         public Store? Store { get; set; }
 
         public bool IsAvailable { get; set; }
-
+        [DataType(DataType.Date)]
         public DateTime CreatedAt { get; set; }
-        public DateTime? UpdatedAt { get; set; }
+        [DataType(DataType.Date)]
+        public DateTime UpdatedAt { get; set; }
     }
 }
 
