@@ -17,7 +17,7 @@ namespace MutipleStoreWebApp.Controllers
             _context = context;
         }
 
-        public async Task<IActionResult> Index(int id = 1)
+        public async Task<IActionResult> Index(int id, string SelectedCategory, string SearchString)
         {
             if (id == null)
             {
