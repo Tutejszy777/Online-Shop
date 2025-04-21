@@ -54,7 +54,7 @@ namespace MutipleStoreWebApp.Controllers
                 StoreId = shop.Id,
                 StoreName = shop.Name,
                 StoreSlug = shop.Slug,
-                ShopProducts = shop.Products,
+                ShopProducts = (ICollection<Product>)shop.Products,
                 CategoryProducts = _context.Categories.Include(c => c.Products).ToList()
             };
 

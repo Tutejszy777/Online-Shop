@@ -4,8 +4,9 @@
     ViewData["Title"] = Model.StoreName;
 }
 
-<form asp-controller="Product" asp-action="Index" method="get">
+<form asp-controller="Home" asp-action="Index" method="get">
     <p>
+        <input type="hidden" name="Id" value="@Model.StoreId" />
         <select asp-for="SelectedCategory" asp-items="Model.Categories">
             <option value="">All</option>
         </select>
@@ -15,15 +16,42 @@
     </p>
 </form>
 
-<p></p>
-<p></p>
-<p></p>
-<p></p>
-<p></p>
-<p></p>
-<p></p>
-<p></p>
-<p></p>
-<p></p>
+<h1>List of products</h1>
+@foreach(var item in Model.Products!)
+{
+    <p>@item.Name</p>
+}
+
+<h1>Categories</h1>
+@foreach (var item in Model.Categories!)
+{
+    <p>@item.Value</p>
+}
 
 
+<hr />
+<p>Selected category: @Model.SelectedCategory!</p>
+
+<hr />
+<p>Search string: @Model.SearchString!</p>
+
+<hr />
+<p>StoreId: @Model.StoreId</p>
+
+<hr />
+<p>Store name: @Model.StoreName</p>
+
+<hr />
+<p>Store slug: @Model.StoreSlug</p>
+
+<h1>List of products</h1>
+@foreach (var item in Model.ShopProducts!)
+{
+    <p>@item.Name</p>
+}
+
+<h1>List of Categories</h1>
+@foreach (var item in Model.CategoryProducts!)
+{
+    <p>@item.Name</p>
+}
