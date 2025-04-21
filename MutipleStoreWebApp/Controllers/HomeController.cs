@@ -1,5 +1,6 @@
 using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using MutipleStoreWebApp.Data;
 using MutipleStoreWebApp.Models;
@@ -19,23 +20,46 @@ namespace MutipleStoreWebApp.Controllers
 
         public async Task<IActionResult> Index(int id, string SelectedCategory, string SearchString)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
             var shop = await _context.Stores
                 .Include(s => s.Products)
-                .ThenInclude(p => p.Category)
+                    .ThenInclude(p => p.Category)
                 .AsNoTracking()
                 .FirstOrDefaultAsync(k => k.Id == id);
+
+            if (shop != null && !String.IsNullOrEmpty(SearchString))
+            {
+                shop.Products = shop.Products
+                    .Where(p => p.Name.ToUpper().Contains(SearchString.ToUpper()))
+                    .ToList();
+            }
+
+            if (shop != null && !String.IsNullOrEmpty(SelectedCategory))
+            {
+                var categoryId = _context.Categories.FirstOrDefault(c => c.Name == SelectedCategory)?.Id;
+                shop.Products = (ICollection<Product>)shop.Products
+                    .Where(p => p.CategoryId == categoryId);
+            }
 
             if (shop == null)
             {
                 return NotFound();
             }
 
-            return View(shop);
+            var shopModel = new ShopPageVM
+            {
+                Products = shop.Products.ToList(),
+                Categories = new SelectList(_context.Categories, "Id", "Name"),
+                SelectedCategory = SelectedCategory,
+                SearchString = SearchString,
+                StoreId = shop.Id,
+                StoreName = shop.Name,
+                StoreSlug = shop.Slug,
+                ShopProducts = shop.Products,
+                CategoryProducts = _context.Categories.Include(c => c.Products).ToList()
+            };
+
+
+            return View(shopModel);
         }
 
         public IActionResult Privacy()
