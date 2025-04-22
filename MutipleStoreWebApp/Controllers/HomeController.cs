@@ -36,7 +36,7 @@ namespace MutipleStoreWebApp.Controllers
 
             if (shop != null && !String.IsNullOrEmpty(SelectedCategory))
             {
-                var categoryId = _context.Categories.FirstOrDefault(c => c.Name == SelectedCategory)?.Id;
+                int.TryParse(SelectedCategory, out int categoryId);
                 shop.Products = shop.Products
                     .Where(p => p.CategoryId == categoryId)
                     .ToList();
@@ -50,7 +50,7 @@ namespace MutipleStoreWebApp.Controllers
             var shopModel = new ShopPageVM
             {
                 Products = shop.Products.ToList(),
-                Categories = new SelectList(_context.Categories.Where(p => p.StoreId == id), "Name", "Name"),
+                Categories = new SelectList(_context.Categories.Where(p => p.StoreId == id), "Id", "Name"),
                 SelectedCategory = SelectedCategory,
                 SearchString = SearchString,
                 StoreId = shop.Id,
