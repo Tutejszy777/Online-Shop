@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using MutipleStoreWebApp.Data;
-using MutipleStoreWebApp.Middleware;
+//using MutipleStoreWebApp.Middleware;
 using MutipleStoreWebApp.Services;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -43,7 +43,7 @@ app.UseRouting();
 
 app.UseAuthorization();
 
-app.UseMiddleware<StoreMiddleware>();
+//app.UseMiddleware<StoreMiddleware>();
 
 app.MapControllerRoute(
     name: "default",

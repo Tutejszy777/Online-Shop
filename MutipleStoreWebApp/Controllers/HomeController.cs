@@ -18,11 +18,12 @@ namespace MutipleStoreWebApp.Controllers
             _context = context;
         }
 
-        public async Task<IActionResult> Index(int id, string SelectedCategory, string SearchString)
+        public async Task<IActionResult> Index(string SelectedCategory, string SearchString, int id = 1)
         {
             var shop = await _context.Stores
                 .Include(s => s.Products)
                     .ThenInclude(p => p.Category)
+                .Include(s => s.Categories)
                 .AsNoTracking()
                 .FirstOrDefaultAsync(k => k.Id == id);
 
@@ -36,8 +37,9 @@ namespace MutipleStoreWebApp.Controllers
             if (shop != null && !String.IsNullOrEmpty(SelectedCategory))
             {
                 var categoryId = _context.Categories.FirstOrDefault(c => c.Name == SelectedCategory)?.Id;
-                shop.Products = (ICollection<Product>)shop.Products
-                    .Where(p => p.CategoryId == categoryId);
+                shop.Products = shop.Products
+                    .Where(p => p.CategoryId == categoryId)
+                    .ToList();
             }
 
             if (shop == null)
@@ -48,14 +50,14 @@ namespace MutipleStoreWebApp.Controllers
             var shopModel = new ShopPageVM
             {
                 Products = shop.Products.ToList(),
-                Categories = new SelectList(_context.Categories, "Id", "Name"),
+                Categories = new SelectList(_context.Categories.Where(p => p.StoreId == id), "Name", "Name"),
                 SelectedCategory = SelectedCategory,
                 SearchString = SearchString,
                 StoreId = shop.Id,
                 StoreName = shop.Name,
                 StoreSlug = shop.Slug,
-                ShopProducts = (ICollection<Product>)shop.Products,
-                CategoryProducts = _context.Categories.Include(c => c.Products).ToList()
+                ShopProducts = shop.Products,
+                CategoryProducts = shop.Categories
             };
 
 
