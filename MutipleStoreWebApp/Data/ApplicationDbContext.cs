@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using MutipleStoreWebApp.Configurations;
 using System.Security.Claims;
 
 namespace MutipleStoreWebApp.Data
@@ -24,6 +25,8 @@ namespace MutipleStoreWebApp.Data
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
+
+            builder.ApplyConfiguration(new OrderConfiguration());
 
             // seeding
             builder.Entity<IdentityRole>().HasData(
