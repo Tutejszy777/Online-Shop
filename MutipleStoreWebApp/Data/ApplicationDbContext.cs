@@ -26,7 +26,7 @@ namespace MutipleStoreWebApp.Data
         {
             base.OnModelCreating(builder);
 
-            builder.ApplyConfiguration(new OrderConfiguration());
+            //builder.ApplyConfiguration(new OrderConfiguration());
 
             // seeding
             builder.Entity<IdentityRole>().HasData(
