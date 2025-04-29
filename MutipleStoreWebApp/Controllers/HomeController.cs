@@ -57,11 +57,27 @@ namespace MutipleStoreWebApp.Controllers
                 StoreName = shop.Name,
                 StoreSlug = shop.Slug,
                 ShopProducts = shop.Products,
-                CategoryProducts = shop.Categories
-            };
+                CategoryProducts = shop.Categories // model requires corrections for optimization 
+            };// create categore.tolist delete shopproducts and categoryproducts.
 
 
             return View(shopModel);
+        }
+
+        public async Task<IActionResult> Details(int id)
+        {
+            var product = await _context.Products
+                .Include(p => p.Category)
+                .Include(p => p.Store)
+                .AsNoTracking()
+                .FirstOrDefaultAsync(m => m.Id == id);
+
+            if (product == null)
+            {
+                return NotFound();
+            }
+
+            return View(product);
         }
 
         public IActionResult Privacy()
