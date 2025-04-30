@@ -80,6 +80,11 @@ namespace MutipleStoreWebApp.Controllers
             return View(product);
         }
 
+        public IActionResult Cart()
+        {
+            return View();
+        }
+
         public IActionResult Privacy()
         {
             return View();
