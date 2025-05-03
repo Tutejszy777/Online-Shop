@@ -10,9 +10,9 @@ namespace MutipleStoreWebApp.Services
             _context = context;
         }
 
-        public async Task<List<Order>> GetUserOrders(Guid userId)
-        {
+        //public async Task<List<Order>> GetUserOrders(Guid userId)
+        //{
 
-        }
+        //}
     }
 }
