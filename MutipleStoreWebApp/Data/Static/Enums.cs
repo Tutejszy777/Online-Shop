@@ -5,7 +5,11 @@
         Success,
         Pending,
         Canceled,
+        Rejected,
         Failed,
-        Return
+        Return,
+        ReceivedBack,
+        Undetermined,
+        Saved
     }
 }
