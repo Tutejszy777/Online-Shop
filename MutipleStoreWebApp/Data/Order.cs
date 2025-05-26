@@ -18,9 +18,6 @@ namespace MutipleStoreWebApp.Data
         public Guid AppUserId { get; set; }
         public AppUser? AppUser { get; set; }
 
-        public int StoreId { get; set; }
-        public Store? Store { get; set; }
-
-        public virtual ICollection<Product> Products { get; set; } = new List<Product>();
+        
     }
 }
