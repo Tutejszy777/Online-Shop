@@ -21,10 +21,6 @@ namespace MutipleStoreWebApp.Data
         public int StoreId { get; set; }
         public Store? Store { get; set; }
 
-
-        public virtual ICollection<Shipment> Shipments { get; set; } = new List<Shipment>();
-        public virtual ICollection<Payment> Payments { get; set; } = new List<Payment>();
         public virtual ICollection<Product> Products { get; set; } = new List<Product>();
-        public virtual Invoice Invoice { get; set; }
     }
 }
