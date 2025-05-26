@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using MutipleStoreWebApp.Configurations;
 using System.Security.Claims;
+using MutipleStoreWebApp.Data;
 
 namespace MutipleStoreWebApp.Data
 {
@@ -12,6 +13,9 @@ namespace MutipleStoreWebApp.Data
         public DbSet<Product> Products { get; set; }
         public DbSet<Category> Categories { get; set; }
         public DbSet<Store> Stores { get; set; }
+        public DbSet<Order> Orders { get; set; }
+        public DbSet<OrderItem> OrderItems { get; set; }
+
 
         private readonly IHttpContextAccessor _httpContextAccessor;
 
@@ -135,5 +139,6 @@ namespace MutipleStoreWebApp.Data
 
             //builder.Entity<Product>().HasQueryFilter(p => userEmail == null || p.Store.OwnerEmail == userEmail);
         }
+        public DbSet<MutipleStoreWebApp.Data.Order> Order { get; set; } = default!;
     }
 }
