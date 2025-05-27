@@ -6,22 +6,25 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using MutipleStoreWebApp.Data;
+using MutipleStoreWebApp.Services;
 
 namespace MutipleStoreWebApp.Controllers
 {
     public class OrderController : Controller
     {
         private readonly ApplicationDbContext _context;
+        private readonly IOrderService _orderService;
 
-        public OrderController(ApplicationDbContext context)
+        public OrderController(ApplicationDbContext context, IOrderService orderService)
         {
             _context = context;
+            _orderService = orderService;
         }
 
         // GET: Order
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Order.ToListAsync());
+            return View(await _orderService.GetAllOrders());
         }
 
         // GET: Order/Details/5
