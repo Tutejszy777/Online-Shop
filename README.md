@@ -1,5 +1,4 @@
-# Online shop
+# DEVELOPMENT STOPED - moved to react + api
 Creating online shop using .NET mvc
 
 
-# STOPED - moved to React + .NET API
